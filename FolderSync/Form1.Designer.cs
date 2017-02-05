@@ -35,6 +35,9 @@
             this.lblSource = new System.Windows.Forms.Label();
             this.grpboxDest = new System.Windows.Forms.GroupBox();
             this.lblDest = new System.Windows.Forms.Label();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.grpBoxSource.SuspendLayout();
             this.grpboxDest.SuspendLayout();
             this.SuspendLayout();
@@ -57,6 +60,7 @@
             this.btnDest.TabIndex = 1;
             this.btnDest.Text = "Destination";
             this.btnDest.UseVisualStyleBackColor = true;
+            this.btnDest.Click += new System.EventHandler(this.btnDest_Click);
             // 
             // btnSource
             // 
@@ -110,11 +114,36 @@
             this.lblDest.TabIndex = 0;
             this.lblDest.Text = "label1";
             // 
+            // folderBrowserDialog1
+            // 
+            this.folderBrowserDialog1.ShowNewFolderButton = false;
+            // 
+            // btnRun
+            // 
+            this.btnRun.Location = new System.Drawing.Point(333, 226);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(75, 23);
+            this.btnRun.TabIndex = 5;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(24, 154);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(35, 13);
+            this.lblStatus.TabIndex = 6;
+            this.lblStatus.Text = "label1";
+            // 
             // mainFolderSync
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 256);
+            this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.btnRun);
             this.Controls.Add(this.grpboxDest);
             this.Controls.Add(this.grpBoxSource);
             this.Controls.Add(this.btnSource);
@@ -128,6 +157,7 @@
             this.grpboxDest.ResumeLayout(false);
             this.grpboxDest.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -140,6 +170,9 @@
         private System.Windows.Forms.Label lblSource;
         private System.Windows.Forms.GroupBox grpboxDest;
         private System.Windows.Forms.Label lblDest;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.Label lblStatus;
     }
 }
 
