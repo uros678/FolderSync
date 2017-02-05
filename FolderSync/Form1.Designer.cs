@@ -32,12 +32,12 @@
             this.btnDest = new System.Windows.Forms.Button();
             this.btnSource = new System.Windows.Forms.Button();
             this.grpBoxSource = new System.Windows.Forms.GroupBox();
-            this.lblSource = new System.Windows.Forms.Label();
             this.grpboxDest = new System.Windows.Forms.GroupBox();
-            this.lblDest = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btnRun = new System.Windows.Forms.Button();
-            this.lblStatus = new System.Windows.Forms.Label();
+            this.lblDest = new System.Windows.Forms.Label();
+            this.lblSource = new System.Windows.Forms.Label();
+            this.txtStatus = new System.Windows.Forms.TextBox();
             this.grpBoxSource.SuspendLayout();
             this.grpboxDest.SuspendLayout();
             this.SuspendLayout();
@@ -83,16 +83,6 @@
             this.grpBoxSource.TabStop = false;
             this.grpBoxSource.Text = "Selected Source";
             // 
-            // lblSource
-            // 
-            this.lblSource.AutoSize = true;
-            this.lblSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblSource.Location = new System.Drawing.Point(7, 20);
-            this.lblSource.Name = "lblSource";
-            this.lblSource.Size = new System.Drawing.Size(41, 15);
-            this.lblSource.TabIndex = 0;
-            this.lblSource.Text = "label1";
-            // 
             // grpboxDest
             // 
             this.grpboxDest.Controls.Add(this.lblDest);
@@ -103,16 +93,6 @@
             this.grpboxDest.TabIndex = 4;
             this.grpboxDest.TabStop = false;
             this.grpboxDest.Text = "Selected Destination";
-            // 
-            // lblDest
-            // 
-            this.lblDest.AutoSize = true;
-            this.lblDest.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblDest.Location = new System.Drawing.Point(7, 20);
-            this.lblDest.Name = "lblDest";
-            this.lblDest.Size = new System.Drawing.Size(41, 15);
-            this.lblDest.TabIndex = 0;
-            this.lblDest.Text = "label1";
             // 
             // folderBrowserDialog1
             // 
@@ -128,21 +108,46 @@
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
-            // lblStatus
+            // lblDest
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(24, 154);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(35, 13);
-            this.lblStatus.TabIndex = 6;
-            this.lblStatus.Text = "label1";
+            this.lblDest.AutoSize = true;
+            this.lblDest.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::FolderSync.Properties.Settings.Default, "lblDest", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.lblDest.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblDest.Location = new System.Drawing.Point(7, 20);
+            this.lblDest.Name = "lblDest";
+            this.lblDest.Size = new System.Drawing.Size(0, 15);
+            this.lblDest.TabIndex = 0;
+            this.lblDest.Text = global::FolderSync.Properties.Settings.Default.lblDest;
+            // 
+            // lblSource
+            // 
+            this.lblSource.AutoSize = true;
+            this.lblSource.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::FolderSync.Properties.Settings.Default, "lblSource", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.lblSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblSource.Location = new System.Drawing.Point(7, 20);
+            this.lblSource.Name = "lblSource";
+            this.lblSource.Size = new System.Drawing.Size(41, 15);
+            this.lblSource.TabIndex = 0;
+            this.lblSource.Text = global::FolderSync.Properties.Settings.Default.lblSource;
+            // 
+            // txtStatus
+            // 
+            this.txtStatus.AcceptsReturn = true;
+            this.txtStatus.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtStatus.Location = new System.Drawing.Point(13, 130);
+            this.txtStatus.Multiline = true;
+            this.txtStatus.Name = "txtStatus";
+            this.txtStatus.ReadOnly = true;
+            this.txtStatus.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtStatus.Size = new System.Drawing.Size(484, 72);
+            this.txtStatus.TabIndex = 6;
             // 
             // mainFolderSync
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 256);
-            this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.grpboxDest);
             this.Controls.Add(this.grpBoxSource);
@@ -172,7 +177,7 @@
         private System.Windows.Forms.Label lblDest;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button btnRun;
-        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.TextBox txtStatus;
     }
 }
 

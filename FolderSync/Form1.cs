@@ -23,7 +23,9 @@ namespace FolderSync
             InitializeComponent();
             lblDest.Text = null;
             lblSource.Text = null;
-            lblStatus.Text = "...no status";
+            txtStatus.AppendText("...no status");
+            Properties.Settings.Default.Reload();
+           
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -37,7 +39,7 @@ namespace FolderSync
 
             if (result == DialogResult.OK)
             {
-                sourcePath = lblSource.Text = folderBrowserDialog1.SelectedPath;
+                lblSource.Text = folderBrowserDialog1.SelectedPath;
             }
         }
 
@@ -47,12 +49,16 @@ namespace FolderSync
 
             if (result == DialogResult.OK)
             {
-                destPath = lblDest.Text = folderBrowserDialog1.SelectedPath;
+                lblDest.Text = folderBrowserDialog1.SelectedPath;
             }
         }
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            txtStatus.Clear();
+            destPath = lblDest.Text;
+            sourcePath = lblSource.Text;
+            Properties.Settings.Default.Save();  
             FileSyncOptions options = FileSyncOptions.ExplicitDetectChanges |
                     FileSyncOptions.RecycleDeletedFiles | FileSyncOptions.RecyclePreviousFileOnUpdates | FileSyncOptions.RecycleConflictLoserFiles;
             
@@ -112,8 +118,9 @@ namespace FolderSync
                 agent.RemoteProvider = destinationProvider;
                 agent.Direction = SyncDirectionOrder.Upload; // Sync source to destination
 
-                this.lblStatus.Text = "Synchronizing changes to replica: " +
-                    destinationProvider.RootDirectoryPath;
+                txtStatus.AppendText("Synchronizing changes to replica: " +
+                    destinationProvider.RootDirectoryPath);
+                txtStatus.AppendText(Environment.NewLine);
                 agent.Synchronize();
             }
             finally
@@ -129,29 +136,35 @@ namespace FolderSync
             switch (args.ChangeType)
             {
                 case ChangeType.Create:
-                    lblStatus.Text = "-- Applied CREATE for file " + args.NewFilePath;
+                    txtStatus.AppendText("-- Applied CREATE for file " + args.NewFilePath);
+                    txtStatus.AppendText(Environment.NewLine);
                     break;
                 case ChangeType.Delete:
-                    lblStatus.Text = "-- Applied DELETE for file " + args.OldFilePath;
+                    txtStatus.AppendText("-- Applied DELETE for file " + args.OldFilePath);
+                    txtStatus.AppendText(Environment.NewLine);
                     break;
                 case ChangeType.Update:
-                    lblStatus.Text = "-- Applied OVERWRITE for file " + args.OldFilePath;
+                    txtStatus.AppendText("-- Applied OVERWRITE for file " + args.OldFilePath);
+                    txtStatus.AppendText(Environment.NewLine);
                     break;
                 case ChangeType.Rename:
-                    lblStatus.Text = "-- Applied RENAME for file " + args.OldFilePath +
-                                      " as " + args.NewFilePath;
+                    txtStatus.AppendText("-- Applied RENAME for file " + args.OldFilePath +
+                                      " as " + args.NewFilePath);
+                    txtStatus.AppendText(Environment.NewLine);
                     break;
             }
         }
 
         public void OnSkippedChange(object sender, SkippedChangeEventArgs args)
         {
-            lblStatus.Text = "-- Skipped applying " + args.ChangeType.ToString().ToUpper()
+            txtStatus.AppendText("-- Skipped applying " + args.ChangeType.ToString().ToUpper()
                   + " for " + (!string.IsNullOrEmpty(args.CurrentFilePath) ?
-                                args.CurrentFilePath : args.NewFilePath) + " due to error";
+                                args.CurrentFilePath : args.NewFilePath) + " due to error");
+            txtStatus.AppendText(Environment.NewLine);
 
             if (args.Exception != null)
-                lblStatus.Text = "   [" + args.Exception.Message + "]";
+                txtStatus.AppendText("   [" + args.Exception.Message + "]");
+                txtStatus.AppendText(Environment.NewLine);
         }
     }
 }
