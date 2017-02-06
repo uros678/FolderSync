@@ -32,11 +32,11 @@
             this.btnDest = new System.Windows.Forms.Button();
             this.btnSource = new System.Windows.Forms.Button();
             this.grpBoxSource = new System.Windows.Forms.GroupBox();
+            this.lblSource = new System.Windows.Forms.Label();
             this.grpboxDest = new System.Windows.Forms.GroupBox();
+            this.lblDest = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btnRun = new System.Windows.Forms.Button();
-            this.lblDest = new System.Windows.Forms.Label();
-            this.lblSource = new System.Windows.Forms.Label();
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.grpBoxSource.SuspendLayout();
             this.grpboxDest.SuspendLayout();
@@ -83,6 +83,17 @@
             this.grpBoxSource.TabStop = false;
             this.grpBoxSource.Text = "Selected Source";
             // 
+            // lblSource
+            // 
+            this.lblSource.AutoSize = true;
+            this.lblSource.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::FolderSync.Properties.Settings.Default, "lblSource", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.lblSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblSource.Location = new System.Drawing.Point(7, 20);
+            this.lblSource.Name = "lblSource";
+            this.lblSource.Size = new System.Drawing.Size(41, 15);
+            this.lblSource.TabIndex = 0;
+            this.lblSource.Text = global::FolderSync.Properties.Settings.Default.lblSource;
+            // 
             // grpboxDest
             // 
             this.grpboxDest.Controls.Add(this.lblDest);
@@ -93,6 +104,17 @@
             this.grpboxDest.TabIndex = 4;
             this.grpboxDest.TabStop = false;
             this.grpboxDest.Text = "Selected Destination";
+            // 
+            // lblDest
+            // 
+            this.lblDest.AutoSize = true;
+            this.lblDest.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::FolderSync.Properties.Settings.Default, "lblDest", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.lblDest.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblDest.Location = new System.Drawing.Point(7, 20);
+            this.lblDest.Name = "lblDest";
+            this.lblDest.Size = new System.Drawing.Size(0, 15);
+            this.lblDest.TabIndex = 0;
+            this.lblDest.Text = global::FolderSync.Properties.Settings.Default.lblDest;
             // 
             // folderBrowserDialog1
             // 
@@ -107,28 +129,6 @@
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
-            // 
-            // lblDest
-            // 
-            this.lblDest.AutoSize = true;
-            this.lblDest.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::FolderSync.Properties.Settings.Default, "lblDest", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblDest.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblDest.Location = new System.Drawing.Point(7, 20);
-            this.lblDest.Name = "lblDest";
-            this.lblDest.Size = new System.Drawing.Size(0, 15);
-            this.lblDest.TabIndex = 0;
-            this.lblDest.Text = global::FolderSync.Properties.Settings.Default.lblDest;
-            // 
-            // lblSource
-            // 
-            this.lblSource.AutoSize = true;
-            this.lblSource.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::FolderSync.Properties.Settings.Default, "lblSource", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblSource.Location = new System.Drawing.Point(7, 20);
-            this.lblSource.Name = "lblSource";
-            this.lblSource.Size = new System.Drawing.Size(41, 15);
-            this.lblSource.TabIndex = 0;
-            this.lblSource.Text = global::FolderSync.Properties.Settings.Default.lblSource;
             // 
             // txtStatus
             // 

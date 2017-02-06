@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +18,8 @@ namespace FolderSync
     {
         private string sourcePath;
         private string destPath;
+        private string tempDir = Path.GetTempPath();
+        private string trashDir = Path.GetTempPath();
 
         public mainFolderSync()
         {
@@ -58,26 +61,25 @@ namespace FolderSync
             txtStatus.Clear();
             destPath = lblDest.Text;
             sourcePath = lblSource.Text;
-            Properties.Settings.Default.Save();  
+            Properties.Settings.Default.Save();
             FileSyncOptions options = FileSyncOptions.ExplicitDetectChanges |
                     FileSyncOptions.RecycleDeletedFiles | FileSyncOptions.RecyclePreviousFileOnUpdates | FileSyncOptions.RecycleConflictLoserFiles;
             
-
             FileSyncScopeFilter filter = new FileSyncScopeFilter();
-            filter.FileNameExcludes.Add("*.lnk"); // Exclude all *.lnk files
+            filter.FileNameExcludes.Add("*.metadata");
 
             DetectChangesOnFileSystemReplica(
                 sourcePath, filter, options);
             DetectChangesOnFileSystemReplica(
                 destPath, filter, options);
-
-            SyncFileSystemReplicasOneWay(sourcePath, destPath, null, options);
-
+                
+           SyncFileSystemReplicasOneWay(sourcePath, destPath, filter, options);
+           
         }
 
         public void DetectChangesOnFileSystemReplica(
-           string replicaRootPath,
-           FileSyncScopeFilter filter, FileSyncOptions options)
+           string replicaRootPath,FileSyncScopeFilter filter, 
+           FileSyncOptions options)
         {
             FileSyncProvider provider = null;
 
@@ -108,6 +110,12 @@ namespace FolderSync
                 destinationProvider = new FileSyncProvider(
                     destinationReplicaRootPath, filter, options);
 
+                sourceProvider.Configuration.ConflictResolutionPolicy = ConflictResolutionPolicy.SourceWins;
+                destinationProvider.Configuration.ConflictResolutionPolicy = ConflictResolutionPolicy.SourceWins;
+
+                sourceProvider.Configuration.CollisionConflictResolutionPolicy = CollisionConflictResolutionPolicy.SourceWins;
+                destinationProvider.Configuration.CollisionConflictResolutionPolicy = CollisionConflictResolutionPolicy.SourceWins;        
+
                 destinationProvider.AppliedChange +=
                     new EventHandler<AppliedChangeEventArgs>(OnAppliedChange);
                 destinationProvider.SkippedChange +=
@@ -136,19 +144,19 @@ namespace FolderSync
             switch (args.ChangeType)
             {
                 case ChangeType.Create:
-                    txtStatus.AppendText("-- Applied CREATE for file " + args.NewFilePath);
+                    txtStatus.AppendText("Applied CREATE for file " + args.NewFilePath);
                     txtStatus.AppendText(Environment.NewLine);
                     break;
                 case ChangeType.Delete:
-                    txtStatus.AppendText("-- Applied DELETE for file " + args.OldFilePath);
+                    txtStatus.AppendText("Applied DELETE for file " + args.OldFilePath);
                     txtStatus.AppendText(Environment.NewLine);
                     break;
                 case ChangeType.Update:
-                    txtStatus.AppendText("-- Applied OVERWRITE for file " + args.OldFilePath);
+                    txtStatus.AppendText("Applied OVERWRITE for file " + args.OldFilePath);
                     txtStatus.AppendText(Environment.NewLine);
                     break;
                 case ChangeType.Rename:
-                    txtStatus.AppendText("-- Applied RENAME for file " + args.OldFilePath +
+                    txtStatus.AppendText("Applied RENAME for file " + args.OldFilePath +
                                       " as " + args.NewFilePath);
                     txtStatus.AppendText(Environment.NewLine);
                     break;
@@ -157,7 +165,7 @@ namespace FolderSync
 
         public void OnSkippedChange(object sender, SkippedChangeEventArgs args)
         {
-            txtStatus.AppendText("-- Skipped applying " + args.ChangeType.ToString().ToUpper()
+            txtStatus.AppendText("Skipped applying " + args.ChangeType.ToString().ToUpper()
                   + " for " + (!string.IsNullOrEmpty(args.CurrentFilePath) ?
                                 args.CurrentFilePath : args.NewFilePath) + " due to error");
             txtStatus.AppendText(Environment.NewLine);
