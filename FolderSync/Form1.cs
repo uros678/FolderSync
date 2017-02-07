@@ -1,9 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +18,7 @@ namespace FolderSync
     {
         private string sourcePath;
         private string destPath;
-        private string tempDir = Path.GetTempPath();
-        private string trashDir = Path.GetTempPath();
-
+        
         public mainFolderSync()
         {
             InitializeComponent();
@@ -136,6 +134,8 @@ namespace FolderSync
                 // Release resources
                 if (sourceProvider != null) sourceProvider.Dispose();
                 if (destinationProvider != null) destinationProvider.Dispose();
+
+                FileSyncReset();
             }
         }
 
@@ -174,6 +174,18 @@ namespace FolderSync
                 txtStatus.AppendText("   [" + args.Exception.Message + "]");
                 txtStatus.AppendText(Environment.NewLine);
         }
+
+		public void FileSyncReset()
+		{
+			if (File.Exists(sourcePath + "\\filesync.metadata"))
+            {
+				File.Delete(sourcePath + "\\filesync.metadata");
+			}
+            if (File.Exists(destPath + "\\filesync.metadata"))
+            {
+				File.Delete(destPath + "\\filesync.metadata");
+			}
+		}
     }
 }
 

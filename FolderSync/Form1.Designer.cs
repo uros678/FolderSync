@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainFolderSync));
             this.btnExit = new System.Windows.Forms.Button();
             this.btnDest = new System.Windows.Forms.Button();
             this.btnSource = new System.Windows.Forms.Button();
@@ -154,6 +155,7 @@
             this.Controls.Add(this.btnSource);
             this.Controls.Add(this.btnDest);
             this.Controls.Add(this.btnExit);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "mainFolderSync";
             this.Text = "FolderSync";
