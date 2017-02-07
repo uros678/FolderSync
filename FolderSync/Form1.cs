@@ -10,12 +10,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Synchronization;
 using Microsoft.Synchronization.Files;
-
+using Unclassified.UI;
 
 namespace FolderSync
 {
     public partial class mainFolderSync : Form
     {
+        private SystemMenu systemMenu;
+
         private string sourcePath;
         private string destPath;
         
@@ -26,7 +28,29 @@ namespace FolderSync
             lblSource.Text = null;
             txtStatus.AppendText("...no status");
             Properties.Settings.Default.Reload();
-           
+
+            // Create instance and connect it with the Form
+            systemMenu = new SystemMenu(this);
+
+            // Define commands and handler methods
+            // (Deferred until HandleCreated if it's too early)
+            // IDs are counted internally, separator is optional
+            systemMenu.AddCommand("&About…", OnSysMenuAbout, true);
+
+        }
+
+        protected override void WndProc(ref Message msg)
+        {
+            base.WndProc(ref msg);
+
+            // Let it know all messages so it can handle WM_SYSCOMMAND
+            // (This method is inlined)
+            systemMenu.HandleMessage(ref msg);
+        }
+
+        private void OnSysMenuAbout()
+        {
+            MessageBox.Show("My about message");
         }
 
         private void btnExit_Click(object sender, EventArgs e)
